@@ -50,20 +50,20 @@ columns = ["id", "url", "name", "title", "title_short", "description"
            , "address.street", "address.zipcode", "address.city", "address.country"]
 dataframe = pd.DataFrame(columns=columns)
 
-#i = 1
+i = 1
 # Get data from the API
 #print()
-#for entry in url_list:
+for entry in url_list:
     
-api_data = get_data(url_list)
-# If data is successfully retrieved, append it to the DataFrame
-if api_data:
-    dataframe = append_df(api_data, dataframe)
-    #filtreleme işlemini append'de değilde gette yapmaya çalış
-    print(f"added ")
-else:
-    print(f"not added")
-    #i = i+1
+    api_data = get_data(entry)
+    # If data is successfully retrieved, append it to the DataFrame
+    if api_data:
+        dataframe = append_df(api_data, dataframe)
+        #filtreleme işlemini append'de değilde gette yapmaya çalış
+        print(f"added: {i} of {len(url_list)} ")
+    else:
+        print(f"not added: {i}")
+    i = i+1
 
 #dictionary ile multiple checkle
 
