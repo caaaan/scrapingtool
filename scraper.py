@@ -16,6 +16,8 @@ url_list = []
 #be_min = GeoLocation(49.30, 2.33)
 #be_max = GeoLocation(51.30,6.24)
 
+#CREATE FUNCTION FOR THE AMOUNT OF POINTS BETWEEN TWO GEOLOCATIONS (WILL MAKE THINGS EASIER)
+
 #test values
 be_min = GeoLocation(49.30,2.33)
 be_max = GeoLocation(49.31,2.34)
@@ -54,8 +56,10 @@ i = 1
 # Get data from the API
 #print()
 for entry in url_list:
+#change for loop structure
     
     api_data = get_data(entry)
+    #change from entry to url_list
     # If data is successfully retrieved, append it to the DataFrame
     if api_data:
         dataframe = append_df(api_data, dataframe)

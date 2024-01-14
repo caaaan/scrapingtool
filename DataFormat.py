@@ -6,6 +6,7 @@ def get_data(urls):
     concatenated_data = {}  # Initialize an empty dictionary for concatenated data
     
     for url in urls:
+        #multi-threading işi kolaylaştırır
         response = requests.get(url)
         
         if response.status_code == 200:
