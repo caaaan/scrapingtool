@@ -55,19 +55,19 @@ dataframe = pd.DataFrame(columns=columns)
 i = 1
 # Get data from the API
 #print()
-for entry in url_list:
+#for entry in url_list:
 #change for loop structure
     
-    api_data = get_data(entry)
-    #change from entry to url_list
-    # If data is successfully retrieved, append it to the DataFrame
-    if api_data:
-        dataframe = append_df(api_data, dataframe)
-        #filtreleme işlemini append'de değilde gette yapmaya çalış
-        print(f"added: {i} of {len(url_list)} ")
-    else:
-        print(f"not added: {i}")
-    i = i+1
+api_data = get_data(url_list)
+#change from entry to url_list
+# If data is successfully retrieved, append it to the DataFrame
+if api_data:
+    dataframe = append_df(api_data, dataframe)
+    #filtreleme işlemini append'de değilde gette yapmaya çalış
+    print(f"added: {i} of {len(url_list)} ")
+else:
+    print(f"not added: {i}")
+i = i+1
 
 #dictionary ile multiple checkle
 
