@@ -7,9 +7,7 @@ import string
 import pandas as pd
 import json
 
-basic_url = "https://park4night.com/api/places/around?"
-url_ext = "&z=22&radius=200&filter=%7B%7D"
-#&lang=en
+
 
 url_list = []
 
@@ -25,17 +23,7 @@ be_max = GeoLocation(49.31,2.34)
 curr_loc = GeoLocation(49.30, 2.33)
 be_max.updt_lat(be_max.lat()+0.01)
 be_max.updt_lng(be_max.lng()+0.01)
-temp = ""
-while(curr_loc.lat() <= be_max.lat()):
-    #ßif(curr_loc.lat() != be_max.lat()):
-    curr_loc.updt_lng(be_min.lng())
-
-    while(curr_loc.lng() <= be_max.lng()):
-        #lat=47.757846722255074&lng=-1.6754150390625
-        temp = basic_url + "lat=" + str(curr_loc.lat()) + "&lng=" + str(curr_loc.lng()) + url_ext
-        url_list.append(temp)
-        curr_loc.inc_min("lng",1)
-    curr_loc.inc_min("lat",1)
+url_list = GeoLocation.get_loc_links(curr_loc,be_min,be_max)
     
 #access points
 #print(requests.get(url_list[1]).json)

@@ -23,21 +23,18 @@ def append_df(json_data, dataframe, key_column="id"):
 
     # Create a set of values in key_column for faster membership testing
     unique_values_set = set()
-    
-    pd.json_normalize(json_data)
+
     entries_to_add = []
-         
+
     for entry in json_data:
         if entry.get(key_column) is not None and entry[key_column] not in unique_values_set:
-            entries_to_add += entry
-            unique_values_set += entry[key_column]
-    
+            entries_to_add.append(entry)
+            unique_values_set.add(entry[key_column])
+
     if entries_to_add:
         dataframe = pd.concat([dataframe] + entries_to_add, ignore_index=True)
 
     return dataframe
-    #dataframe = pd.concat([dataframe, pd.json_normalize(json_data)], ignore_index=True)
-
 def get_columns(entry):
     response = requests.get(entry)  # Corrected this line
     data = json.loads(json.dumps(response))  # Ensure the data is serialized to a valid JSON string

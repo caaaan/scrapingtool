@@ -5,6 +5,24 @@ class GeoLocation:
         self.latitude = latitude
         #print(self.latitude)
         self.longitude = longitude
+    
+    def get_loc_links(self,curr_loc,min,max):
+        url_list = []
+        basic_url = "https://park4night.com/api/places/around?"
+        url_ext = "&z=22&radius=200&filter=%7B%7D"
+        #&lang=en
+        temp = ""
+        while(curr_loc.lat() <= max.lat()):
+            #ßif(curr_loc.lat() != be_max.lat()):
+            curr_loc.updt_lng(min.lng())
+
+            while(curr_loc.lng() <= max.lng()):
+                #lat=47.757846722255074&lng=-1.6754150390625
+                temp = basic_url + "lat=" + str(curr_loc.lat()) + "&lng=" + str(curr_loc.lng()) + url_ext
+                url_list.append(temp)
+                curr_loc.inc_min("lng",1)
+            curr_loc.inc_min("lat",1)
+        return url_list
 
     def inc_min(self,check,minutes):
         """
