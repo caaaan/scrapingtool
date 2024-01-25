@@ -1,4 +1,5 @@
 import pymongo
+from pymongo import MongoClient
 import requests
 from enum import Enum
 from GeoLocation import GeoLocation
@@ -8,9 +9,11 @@ import pandas as pd
 import json
 
 
-
+uri = "mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority"
+client = MongoClient(uri)
 url_list = []
-
+db = client.url_data
+coll = db.url_list
 #be_min = GeoLocation(49.30, 2.33)
 #be_max = GeoLocation(51.30,6.24)
 
@@ -24,7 +27,9 @@ curr_loc = GeoLocation(49.30, 2.33)
 be_max.updt_lat(be_max.lat()+0.01)
 be_max.updt_lng(be_max.lng()+0.01)
 url_list = GeoLocation.get_loc_links(curr_loc,be_min,be_max)
-    
+
+coll.insert_many(url_list)
+
 #access points
 #print(requests.get(url_list[1]).json)
 
@@ -45,7 +50,7 @@ i = 1
 #print()
 #for entry in url_list:
 #change for loop structure
-    
+
 api_data = get_data(url_list)
 #change from entry to url_list
 # If data is successfully retrieved, append it to the DataFrame
@@ -60,3 +65,5 @@ i = i+1
 #dictionary ile multiple checkle
 
 print(dataframe)
+
+client.close()
