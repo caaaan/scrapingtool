@@ -11,7 +11,7 @@ import json
 
 
 
-uri = "mongodb+srv://myAtlasDBUser:Canconnect@myatlasclusteredu.yttdset.mongodb.net/"
+uri = ""#ENTER URI
 client = MongoClient(uri)
 url_list = []
 url_dict = {}

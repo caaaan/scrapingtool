@@ -22,7 +22,8 @@ def get_data(urls):
 
     #
 def append_db(json_data, dataframe, key_column="id"):
-    uri = "mongodb+srv://myAtlasDBUser:Canconnect@myatlasclusteredu.yttdset.mongodb.net/"
+    uri = "" #ENTER URI
+    
     client = MongoClient(uri)
     db = client.url_data
     coll = db.url_list
