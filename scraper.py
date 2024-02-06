@@ -1,6 +1,7 @@
 import pymongo
 from pymongo import MongoClient
 import requests
+from array import array
 from enum import Enum
 from GeoLocation import GeoLocation
 from DataFormat import get_data, append_df
@@ -9,9 +10,11 @@ import pandas as pd
 import json
 
 
-uri = "mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority"
+
+uri = "mongodb+srv://myAtlasDBUser:Canconnect@myatlasclusteredu.yttdset.mongodb.net/"
 client = MongoClient(uri)
 url_list = []
+url_dict = {}
 db = client.url_data
 coll = db.url_list
 #be_min = GeoLocation(49.30, 2.33)
@@ -28,8 +31,11 @@ be_max.updt_lat(be_max.lat()+0.01)
 be_max.updt_lng(be_max.lng()+0.01)
 url_list = GeoLocation.get_loc_links(curr_loc,be_min,be_max)
 
-coll.insert_many(url_list)
+#unicode_list = [x.encode('utf-8') for x in url_list]
 
+#print(url_dict)
+result = coll.insert_many(url_list)
+#
 #access points
 #print(requests.get(url_list[1]).json)
 
@@ -51,19 +57,19 @@ i = 1
 #for entry in url_list:
 #change for loop structure
 
-api_data = get_data(url_list)
+#api_data = get_data(url_list)
 #change from entry to url_list
 # If data is successfully retrieved, append it to the DataFrame
-if api_data:
-    dataframe = append_df(api_data, dataframe)
+#if api_data:
+#    dataframe = append_df(api_data, dataframe)
     #filtreleme işlemini append'de değilde gette yapmaya çalış
-    print(f"added: {i} of {len(url_list)} ")
-else:
-    print(f"not added: {i}")
+#    print(f"added: {i} of {len(url_list)} ")
+#else:
+#    print(f"not added: {i}")
 i = i+1
 
 #dictionary ile multiple checkle
 
-print(dataframe)
+#print(dataframe)
 
 client.close()

@@ -6,7 +6,8 @@ class GeoLocation:
         #print(self.latitude)
         self.longitude = longitude
     
-    def get_loc_links(self,curr_loc,min,max):
+    @staticmethod
+    def get_loc_links(curr_loc,min,max):
         url_list = []
         basic_url = "https://park4night.com/api/places/around?"
         url_ext = "&z=22&radius=200&filter=%7B%7D"
@@ -19,7 +20,7 @@ class GeoLocation:
             while(curr_loc.lng() <= max.lng()):
                 #lat=47.757846722255074&lng=-1.6754150390625
                 temp = basic_url + "lat=" + str(curr_loc.lat()) + "&lng=" + str(curr_loc.lng()) + url_ext
-                url_list.append(temp)
+                url_list.append({"l": temp})
                 curr_loc.inc_min("lng",1)
             curr_loc.inc_min("lat",1)
         return url_list
