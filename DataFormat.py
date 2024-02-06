@@ -1,3 +1,5 @@
+import pymongo
+from pymongo import MongoClient
 import requests
 import pandas as pd
 import json
@@ -19,27 +21,22 @@ def get_data(urls):
 
 
     #
-def append_df(json_data, dataframe, key_column="id"):
-    if dataframe is None:
-        dataframe = pd.DataFrame()
-
-    # Create a set of values in key_column for faster membership testing
-    unique_values_set = set()
-
+def append_db(json_data, dataframe, key_column="id"):
+    uri = "mongodb+srv://myAtlasDBUser:Canconnect@myatlasclusteredu.yttdset.mongodb.net/"
+    client = MongoClient(uri)
+    db = client.url_data
+    coll = db.url_list
+   
     entries_to_add = []
 
     for entry in json_data:
-        if entry.get(key_column) is not None and entry[key_column] not in unique_values_set:
-        #if colloection.find_one({"name": new_document["name"]}) == None:
+        #if entry.get(key_column) is not None and entry[key_column] not in unique_values_set:
+        if coll.find_one({key_column: entry[key_column]}) == None:
             entries_to_add.append(entry)
-            unique_values_set.add(entry[key_column])
-             #no need for unique values since after the first iteration it will do the filtering properly
-        
-    #upload documents here 
-    if entries_to_add:
-        dataframe = pd.concat([dataframe] + entries_to_add, ignore_index=True)
+            coll.insert_one(entry)
 
-    return dataframe
+
+
 def get_columns(entry):
     response = requests.get(entry)  # Corrected this line
     data = json.loads(json.dumps(response))  # Ensure the data is serialized to a valid JSON string
