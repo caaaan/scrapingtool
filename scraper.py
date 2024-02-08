@@ -4,7 +4,7 @@ import requests
 from array import array
 from enum import Enum
 from GeoLocation import GeoLocation
-from DataFormat import get_data, append_df
+from DataFormat import get_data, append_db
 import string
 import pandas as pd
 import json
@@ -12,11 +12,11 @@ import json
 
 
 uri = ""#ENTER URI
-client = MongoClient(uri)
+#client = MongoClient(uri)
 url_list = []
 url_dict = {}
-db = client.url_data
-coll = db.url_list
+#db = client.url_data
+#coll = db.url_list
 #be_min = GeoLocation(49.30, 2.33)
 #be_max = GeoLocation(51.30,6.24)
 
@@ -34,7 +34,7 @@ url_list = GeoLocation.get_loc_links(curr_loc,be_min,be_max)
 #unicode_list = [x.encode('utf-8') for x in url_list]
 
 #print(url_dict)
-result = coll.insert_many(url_list)
+#result = coll.insert_many(url_list)
 #
 #access points
 #print(requests.get(url_list[1]).json)
@@ -56,12 +56,12 @@ i = 1
 #print()
 #for entry in url_list:
 #change for loop structure
-
-#api_data = get_data(url_list)
+for url in url_list:
+    json_data = get_data(url)
 #change from entry to url_list
 # If data is successfully retrieved, append it to the DataFrame
-#if api_data:
-#    dataframe = append_df(api_data, dataframe)
+    if json_data:
+        append_db(json_data)
     #filtreleme işlemini append'de değilde gette yapmaya çalış
 #    print(f"added: {i} of {len(url_list)} ")
 #else:
@@ -72,4 +72,4 @@ i = i+1
 
 #print(dataframe)
 
-client.close()
+#client.close()
